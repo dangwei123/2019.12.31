@@ -1,0 +1,150 @@
+//1.考勤系统
+create database attend_system;
+use attend_system;
+
+create table employee
+(
+id int primary key,
+name varchar(20) not null
+);
+
+drop table if exists attendance;
+create table attendance
+(
+id int primary key,
+employee_id int,
+name varchar(20) not null,
+attend_num int default 0,
+foreign key(employee_id) references employee(id)
+);
+
+//2.学校宿舍管理系统
+
+create database dor_management_system;
+use dor_management_system;
+
+create table dormitory
+(
+id int primary key,
+name varchar(20) not null
+);
+
+create table student
+(
+id int primary key,
+name varchar(20) not null,
+dor_id int ,
+foreign key(dor_id) references dormitory(id)
+);
+
+create table record
+(
+id int primary key,
+dor_id int unique,
+leavl varchar(20) not null,
+foreign key(dor_id) references dormitory(id)
+);
+
+//3.车辆违章系统
+create database cars_illegal;
+use cars_illegal;
+
+create table owner
+(
+credit_id bigint primary key,
+name varchar(20) not null
+);
+
+create table cars
+(
+car_number varchar(20) primary key,
+colour varchar(20) not null
+);
+
+create table illegal
+(
+owner_id bigint ,
+car_number varchar(20),
+primary key(owner_id,car_number)
+);
+
+//4.学校食堂管理系统
+create database canteen_syetem;
+use canteen_syetem;
+
+create table windows
+(
+id int primary key,
+name varchar(20) not null
+);
+
+create table canteen 
+(
+name varchar(20) primary key,
+win_id int ,
+foreign key (win_id) references windows(id)
+);
+
+create table record
+(
+id int primary key,
+windows_id int ,
+money int default 0,
+foreign key(windows_id) references windows(id)
+);
+
+
+
+
+//1.商品表
+create table goods
+(
+name varchar(20) primary key,
+price decimal(5,2) not null,
+reserve int,
+`desc` varchar(20)
+);
+insret into goods values('学生书包',18.91,101,null);
+
+update goods set price=price+50 where reserve>30; 
+
+delete from goods where price>60 or reserve<200;
+//2.老师表
+create table teachers
+(
+name varchar(20) not null,
+age int ,
+height decimal(4,1),
+weight decimal(3,1),
+sex varchar(20) ,
+education varchar(20),
+birthday timestamp,
+credit_id bigint primary key
+);
+
+//3.图书表
+create table books
+(
+name varchar(20),
+author varchar(20),
+price decimal(4,2),
+sort varchar(20)
+);
+
+insert into books values('java核心技术', 'Cay S. Horstman',56.43,'计算机技术');
+
+update books set price=61 where name='java核心技术';
+
+select name from student where name like '张%' and age between 18 and 25;
+
+select * from article where create_date between 2019-01-01 10:30:00 and 2019-11-10 16:02:00;
+
+select * from article where title is null or create_date > 2019-01-01 00:00:00;
+
+select * from book where author is not null or (price > 50 and publish_date>=2020-01-01 00:00:00);
+
+select * from user where (ID(between 1 and 200) or(between 300 and 500) )and account is not null and amount >1000;
+
+select B.name,A.grade,B.age from A right join B on A.name<=>B.name;
+
+
